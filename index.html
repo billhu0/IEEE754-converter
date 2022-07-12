@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+    <title>IEEE754 converter - By Bill Hu</title>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i|Roboto+Mono:300,400,700|Roboto+Slab:300,400,700" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link href="material/material.min.css" rel="stylesheet">
+    
+    <style>
+        /* Google Font */
+        /* latin */
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Google Sans Regular'), local(GoogleSans-Regular), url(//fonts.gstatic.com/s/googlesans/v5/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2) format("woff2");
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+        }
+
+        @font-face {
+            font-family: 'JetBrains Mono';
+            src: url("fonts/JetBrainsMono-Regular.woff2") format("woff2");
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        
+        /* latin */
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Google Sans Medium'), local('GoogleSans-Medium'), url(https://fonts.gstatic.com/s/googlesans/v11/4UabrENHsxJlGDuGo1OIlLU94YtzCwY.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        body {
+            font-family: Google Sans;
+            background-color: white;
+        }
+
+        #main-container {
+            font-family: Google Sans;
+            /* background-color: wheat; */
+            padding: 0%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;   /* vertically */
+            justify-content: space-around; /* horizonally */
+            min-height: 200px;
+            margin: 0%;
+            padding: 10px;
+        }
+        #title-text {
+            font-family: 'Google Sans';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            width: max-content;
+        }
+        #number-table-binary {
+            display: block;
+        }
+
+        .myheader {
+            text-align: center; 
+            padding: 0.5em 1em;
+            font-weight: bold;
+            font-family: Google Sans;
+        }
+
+        .mytablebody {
+            text-align: center;
+            padding: 0em 1em;
+        }
+
+        .mytablebody-first {
+            text-align: left;
+            padding: 0em 1em;
+            font-weight: bold;
+        }
+
+        #add1-button {
+            width: 3em; 
+            padding: 0.5em; 
+            margin: 0.5em; 
+        }
+
+        #sub1-button {
+            width: 3em; 
+            padding: 0.5em; 
+            margin: 0.5em; 
+        }
+
+        input {
+            font-family: 'JetBrains Mono';
+        }
+
+        /* #sign_value, #exponent_value, #mantissa_value, */
+        #actual_sign, #actual_exponent, #actual_mantissa {
+            font-family: 'JetBrains Mono';
+        }
+
+        /* * {
+            border-style: double;
+            border-color: green;
+        } */
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Outmost container to center the elements -->
+    <div id="main-container"><div>
+        <!-- Title -->
+        <div style="display: flex; justify-content: center;">
+            <h4 id="title-text">IEEE 754 Converter (js)</h4>
+        </div>
+        
+        <!-- Binary representation table -->
+        <table id="number-table-binary"><tbody>
+            <tr>
+                <td class="myheader"></td>
+                <td class="myheader" style="background-color: #d2d2e7;">Sign</td>
+                <td class="myheader" style="background-color: #c0ddc2;">Exponent</td>
+                <td class="myheader" style="background-color: #ddd0c4;">Mantissa</td>
+            </tr>
+            <tr>
+                <td class="mytablebody-first">Meaning:</td>
+                <td class="mytablebody" style="background-color: #d2d2e7;">
+                    <span id="sign_value">+1</span>
+                </td>
+                <td class="mytablebody" style="background-color: #c0ddc2;" id="exponent_value">
+                    2<span style="vertical-align: super;">-126</span>
+                </td>
+                <td class="mytablebody" style="background-color: #ddd0c4;">
+                    <span id="mantissa_value">0.0</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="mytablebody-first">Binary encoding:</td>
+                <td class="mytablebody" style="background-color: #d2d2e7;">
+                    <span id="actual_sign">0</span>
+                </td>
+                <td class="mytablebody" style="background-color: #c0ddc2;">
+                    <span id="actual_exponent">0</span>
+                </td>
+                <td class="mytablebody" style="background-color: #ddd0c4;">
+                    <span id="actual_mantissa">0</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="mytablebody-first">Binary:</td>
+                <td style="text-align: center; padding: 0em 1em; margin-right: 0.5em; background-color: #d2d2e7;">
+                    <input type="checkbox" id="cbsign">
+                </td>
+                <td style="text-align: center; padding: 0em 1em; margin-right: 0.5em; background-color: #c0ddc2;">
+                    <input type="checkbox" id="cbexp0">
+                    <input type="checkbox" id="cbexp1">
+                    <input type="checkbox" id="cbexp2">
+                    <input type="checkbox" id="cbexp3">
+                    <input type="checkbox" id="cbexp4">
+                    <input type="checkbox" id="cbexp5">
+                    <input type="checkbox" id="cbexp6">
+                    <input type="checkbox" id="cbexp7">
+                </td>
+                <td style="text-align: center; padding: 0em 1em; margin-right: 0.5em; background-color: #ddd0c4;">
+                    <input type="checkbox" id="cbmant0">
+                    <input type="checkbox" id="cbmant1">
+                    <input type="checkbox" id="cbmant2">
+                    <input type="checkbox" id="cbmant3">
+                    <input type="checkbox" id="cbmant4">
+                    <input type="checkbox" id="cbmant5">
+                    <input type="checkbox" id="cbmant6">
+                    <input type="checkbox" id="cbmant7">
+                    <input type="checkbox" id="cbmant8">
+                    <input type="checkbox" id="cbmant9">
+                    <input type="checkbox" id="cbmant10">
+                    <input type="checkbox" id="cbmant11">
+                    <input type="checkbox" id="cbmant12">
+                    <input type="checkbox" id="cbmant13">
+                    <input type="checkbox" id="cbmant14">
+                    <input type="checkbox" id="cbmant15">
+                    <input type="checkbox" id="cbmant16">
+                    <input type="checkbox" id="cbmant17">
+                    <input type="checkbox" id="cbmant18">
+                    <input type="checkbox" id="cbmant19">
+                    <input type="checkbox" id="cbmant20">
+                    <input type="checkbox" id="cbmant21">
+                    <input type="checkbox" id="cbmant22">
+                </td>
+            </tr>
+        </tbody></table>
+
+        <div style="margin: 20px;"></div>
+
+        <!-- Input boxes in the end -->
+        <div style="display: flex; justify-content: center;">
+            <table><tbody>
+                <tr>
+                    <td id="dec_repr_text">Decimal:</td>
+                    <td><form>
+                        <input type="text" size="50" id="decimal">
+                    </form></td>
+                    <!-- <td rowspan="4">
+                        <div><button type="button" class="btn btn-secondary" id="add1-button">+1</button></div>
+                        <div><button type="button" class="btn btn-secondary" id="sub1-button">-1</button></div>
+                    </td> -->
+                </tr>
+                <tr>
+                    <td>Real decimal value:</td>
+                    <td><input type="text" size="50" id="highprecision_decimal" readonly=""></td>
+                </tr>
+                <tr>
+                    <td>Binary:</td>
+                    <td><input type="text" size="50" id="binary"></td>
+                </tr>
+                <tr>
+                    <td>Hexadecimal:</td>
+                    <td><input type="text" size="50" id="hexadecimal"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="display: flex; align-items: center; justify-content: center;">
+                        <!-- The message should go away once the js code is executed. -->
+                        <div id="convstatus" style="margin: 0.5em; color: red;">The javascript code might not function well. Check console for details.</div>
+                    </td>
+                </tr>
+            </tbody></table>
+        </div>
+        
+    </div></div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="material/material.min.js"></script>
+    <script src="script.js"></script>
+    <noscript>(this page requires Javascript)</noscript>
+
+</div>
+
+</body>
+</html>
+
