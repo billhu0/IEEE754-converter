@@ -8,32 +8,33 @@ const elem_mantissa_value   = document.getElementById('mantissa_value');
 const elem_encoded_sign     = document.getElementById('actual_sign');
 const elem_encoded_exponent = document.getElementById('actual_exponent');
 const elem_encoded_mantissa = document.getElementById('actual_mantissa');
-
-const checkbox_sign = document.getElementById('cbsign');
-const checkbox_exponent_arr = function () {
-    var list1 = [];
-    for (var i = 0; i < 8; i++){
-        list1.push(document.getElementById('cbexp' + i));
-    }
-    return list1;
-} ();
-const checkbox_mantissa_arr = function () {
-    var list = [];
-    for (var i = 0; i < 23; i++){
-        list.push(document.getElementById('cbmant' + i));
-    }
-    return list;
-} ();
-
 const input_decimal      = document.getElementById('decimal');
 const input_actual_float = document.getElementById('highprecision_decimal');
 const input_binary       = document.getElementById('binary');
 const input_hexadecimal  = document.getElementById('hexadecimal');
 const error_indicator    = document.getElementById('convstatus');
 
+const checkbox_sign = document.getElementById('cbsign');
+const checkbox_exponent_arr = function () {
+    let list1 = [];
+    for (let i = 0; i < 8; i++){
+        list1.push(document.getElementById('cbexp' + i));
+    }
+    return list1;
+} ();
+const checkbox_mantissa_arr = function () {
+    let list = [];
+    for (let i = 0; i < 23; i++){
+        list.push(document.getElementById('cbmant' + i));
+    }
+    return list;
+} ();
+
+// base data type holding the floating point number
 const buffer = new ArrayBuffer(4);
 const view = new DataView(buffer);
 
+// update functions which are called after change happens
 function __update_checkbox_representation() {
     // binary value
     var bin = view.getUint32(0).toString(2);
@@ -127,6 +128,7 @@ function update_checkbox() {
     error_indicator.innerHTML = ``;
 }
 
+// when decimal input is changed, this function is called
 function update_decimal() {
     try {
         // check if decimal value is invalid
@@ -158,6 +160,7 @@ function update_decimal() {
     }
 }
 
+// when binary input changed, this function is called
 function update_binary() {
     try {
         // check if binary value inputted is valid
@@ -190,6 +193,7 @@ function update_binary() {
     }
 }
 
+// when hexadecimal input is changed, this function is called
 function update_hex() {
     try {
         // check if inputted hex value inputted is valid
@@ -221,14 +225,15 @@ function update_hex() {
     }
 }
 
+// add event listeners
 checkbox_sign.onchange = update_checkbox;
 checkbox_exponent_arr.forEach(e => {e.onchange = update_checkbox});
 checkbox_mantissa_arr.forEach(e => {e.onchange = update_checkbox});
-
 input_decimal.oninput = update_decimal;
 input_binary.oninput = update_binary;
 input_hexadecimal.oninput = update_hex;
 
+// initialize
 function init() {
     input_decimal.value = '0';
     update_decimal();
