@@ -6,6 +6,7 @@
 
     // sign checkbox
     const cb_s = document.getElementById('cb-s') as HTMLInputElement;
+    // exponent checkbox
     const cb_e: HTMLInputElement[] = function () {
         let l: HTMLInputElement[] = [];
         for (let i = 1; i <= 8; i++) {
@@ -13,6 +14,7 @@
         }
         return l;
     } ();
+    // mantissa checkbox
     const cb_m: HTMLInputElement[] = function () {
         let l: HTMLInputElement[] = [];
         for (let i = 1; i <= 23; i++) {
@@ -25,19 +27,19 @@
     const txt_e = document.getElementById('txt-e') as HTMLElement; // exponent checkbox text
     const txt_m = document.getElementById('txt-m') as HTMLElement; // mantissa checkbox text
 
-    const mean_s = document.getElementById('mean-s') as HTMLElement;
-    const mean_e = document.getElementById('mean-e') as HTMLElement;
-    const mean_m = document.getElementById('mean-m') as HTMLElement;
+    const mean_s = document.getElementById('mean-s') as HTMLElement; // sign meaning text
+    const mean_e = document.getElementById('mean-e') as HTMLElement; // exponent meaning text
+    const mean_m = document.getElementById('mean-m') as HTMLElement; // mantissa meaning text
 
-    const bin_inp = document.getElementById('bin-input') as HTMLInputElement;
-    const dec_inp = document.getElementById('dec-input') as HTMLInputElement;
-    const hex_inp = document.getElementById('hex-input') as HTMLInputElement;
+    const bin_inp = document.getElementById('bin-input') as HTMLInputElement; // binary input
+    const dec_inp = document.getElementById('dec-input') as HTMLInputElement; // decimal input
+    const hex_inp = document.getElementById('hex-input') as HTMLInputElement; // hexadecimal input
 
     const bin_inp_div = document.getElementById('bin-input-div') as HTMLElement;
     const dec_inp_div = document.getElementById('dec-input-div') as HTMLElement;
     const hex_inp_div = document.getElementById('hex-input-div') as HTMLElement;
 
-    const real_vl = document.getElementById('real-value') as HTMLElement;
+    const real_vl = document.getElementById('real-value') as HTMLElement; // real value represented
 
     // base data type holding the floating point number
     const buffer: ArrayBuffer = new ArrayBuffer(4);
@@ -94,6 +96,7 @@
         bin_inp_div.classList.remove('is-invalid');
     }
 
+    // update hex value input according to 'view'
     function __update_hex() {
         let hex: string = view.getUint32(0).toString(16);
         while (hex.length < 8) hex = '0' + hex;
@@ -101,10 +104,13 @@
         hex_inp_div.classList.remove('is-invalid');
     }
 
+    // update the real number represented according to 'view'
     function __update_real() {
         real_vl.innerHTML = view.getFloat32(0).toString();
     }
 
+    // When checkbox is updated, this func is called.
+    // It reads checkbox status, updates the dataView, and update related elements.
     function cb_updated() {
         let s: string = cb_s.checked ? '1' : '0';
         let e: string = function () {
@@ -129,6 +135,7 @@
         __update_real();
     }
 
+    // when binary value is updated, this function is called
     function bin_updated() {
         let s: string = bin_inp.value;
         // if regexp matches, the input is valid
@@ -145,6 +152,7 @@
         dec_inp_div.classList.remove('is-invalid');
     }
 
+    // when hex value is updated, this function is called
     function hex_updated() {
         let s: string = hex_inp.value;
         if (s.match('(?:0[xX])?[0-9a-fA-F]{0,8}')?.toString() == s){
@@ -158,6 +166,7 @@
         dec_inp_div.classList.remove('is-invalid');
     }
 
+    // when decimal value is updated, this function is called.
     function dec_updated() {
         let s: string = dec_inp.value;
         // @ts-ignore

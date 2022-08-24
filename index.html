@@ -30,6 +30,12 @@
         .max-width {
             width: 100%;
         }
+        .larger-font {
+            font-size: larger;
+        }
+        .text-center {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -43,14 +49,14 @@
         <thead>
         <tr>
             <td></td>
-            <td>Sign</td>
-            <td>Exponent</td>
-            <td>Mantissa</td>
+            <td class="larger-font"><div class="text-center"><strong>Sign</strong></div></td>
+            <td class="larger-font"><div class="text-center"><strong>Exponent</strong></div></td>
+            <td class="larger-font"><div class="text-center"><strong>Mantissa</strong></div></td>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>Binary</td>
+            <td class="larger-font"><strong>Binary</strong></td>
             <td>
                 <div style="text-align: center">
                     <input type="checkbox" id="cb-s">
@@ -107,35 +113,35 @@
         </tr>
 
         <tr>
-            <td>Meaning</td>
+            <td class="larger-font"><strong>Meaning</strong></td>
             <td>
                 <div style="text-align: center">
-                    <span class="jb-font" id="mean-s">+1</span>
+                    <span class="jb-font larger-font" id="mean-s">+1</span>
                 </div>
             </td>
             <td>
                 <div style="text-align: center">
-                    <span class="jb-font" id="mean-e">2<span style="vertical-align: super;">-126</span></span>
+                    <span class="jb-font larger-font" id="mean-e">2<span style="vertical-align: super;">-126</span></span>
                 </div>
             </td>
             <td>
                 <div style="text-align: center">
-                    <span class="jb-font" id="mean-m">0.0</span>
+                    <span class="jb-font larger-font" id="mean-m">0.0</span>
                 </div>
             </td>
         </tr>
 
         <tr>
-            <td>Represented value</td>
+            <td class="larger-font"><strong>Represented value</strong></td>
             <td colspan="3">
-                <div class="jb-font">
-                    <span style="float: left" id="real-value">(+1) * (0.00000000000000000000000) * 2^-126 = 0.0</span>
+                <div style="float: left;" class="larger-font">
+                    <span id="real-value">0.0</span>
                 </div>
             </td>
         </tr>
 
         <tr>
-            <td>Binary num</td>
+            <td class="larger-font"><strong>Binary num</strong></td>
             <td colspan="3">
                 <div class="mdl-textfield mdl-js-textfield jb-font max-width" id="bin-input-div">
                     <input class="mdl-textfield__input jb-font" type="text" pattern="(?:0[bB])?[0-1]{0,32}" id="bin-input">
@@ -145,7 +151,7 @@
             </td>
         </tr>
         <tr>
-            <td>Decimal num</td>
+            <td class="larger-font"><strong>Decimal num</strong></td>
             <td colspan="3">
                 <div class="mdl-textfield mdl-js-textfield jb-font max-width" id="dec-input-div">
                     <input class="mdl-textfield__input jb-font" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="dec-input">
@@ -155,7 +161,7 @@
             </td>
         </tr>
         <tr>
-            <td>Hex num</td>
+            <td class="larger-font"><strong>Hex num</strong></td>
             <td colspan="3">
                 <div class="mdl-textfield mdl-js-textfield jb-font max-width" id="hex-input-div">
                     <input class="mdl-textfield__input jb-font" type="text" pattern="(?:0[xX])?[0-9a-fA-F]{0,8}" id="hex-input">
